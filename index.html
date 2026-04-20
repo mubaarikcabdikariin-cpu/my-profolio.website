@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Full Scientific Calculator</title>
+
+<style>
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #020617;
+  font-family: Arial;
+  color: white;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+}
+
+.calculator {
+  background: #0f172a;
+  padding: 20px;
+  border-radius: 20px;
+  width: 340px;
+}
+
+.display {
+  height: 70px;
+  background: black;
+  color: #00ffcc;
+  font-size: 26px;
+  text-align: right;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+button {
+  height: 50px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #1e293b;
+  color: white;
+}
+
+button:hover { background: #334155; }
+
+.operator { background: #f97316; }
+.equal { background: #22c55e; }
+.clear { background: #ef4444; }
+.func { background: #3b82f6; }
+
+.history {
+  background: #0f172a;
+  padding: 15px;
+  border-radius: 20px;
+  width: 220px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="calculator">
+  <div id="display" class="display">0</div>
+
+  <div class="buttons">
+    <button class="clear" onclick="clearAll()">C</button>
+    <button onclick="del()">DEL</button>
+    <button class="operator" onclick="op('/')">÷</button>
+    <button class="operator" onclick="op('*')">×</button>
+    <button class="func" onclick="sqrt()">√</button>
+
+    <button onclick="num('7')">7</button>
+    <button onclick="num('8')">8</button>
+    <button onclick="num('9')">9</button>
+    <button class="operator" onclick="op('-')">−</button>
+    <button class="func" onclick="pow()">xʸ</button>
+
+    <button onclick="num('4')">4</button>
+    <button onclick="num('5')">5</button>
+    <button onclick="num('6')">6</button>
+    <button class="operator" onclick="op('+')">+</button>
+    <button class="func" onclick="square()">x²</button>
+
+    <button onclick="num('1')">1</button>
+    <button onclick="num('2')">2</button>
+    <button onclick="num('3')">3</button>
+    <button class="equal" onclick="calculate()">=</button>
+    <button class="func" onclick="reciprocal()">1/x</button>
+
+    <button onclick="num('0')">0</button>
+    <button onclick="dot()">.</button>
+    <button class="func" onclick="pi()">π</button>
+    <button class="func" onclick="eNum()">e</button>
+    <button class="func" onclick="percent()">%</button>
+
+    <button class="func" onclick="sin()">sin</button>
+    <button class="func" onclick="cos()">cos</button>
+    <button class="func" onclick="tan()">tan</button>
+    <button class="func" onclick="log()">log</button>
+    <button class="func" onclick="ln()">ln</button>
+  </div>
+</div>
+
+<div class="history">
+  <h3>History</h3>
+  <div id="history"></div>
+</div>
+
+</div>
+
+<script>
+let d = document.getElementById("display");
+let history = document.getElementById("history");
+
+let current = "", previous = "", operator = null;
+
+function update(v){ d.innerText = v || "0"; }
+
+function num(n){ current += n; update(current); }
+function dot(){ if(!current.includes(".")) current += ".", update(current); }
+
+function op(o){
+  if(current==="") return;
+  previous = current;
+  operator = o;
+  current="";
+}
+
+function calculate(){
+  let a=parseFloat(previous), b=parseFloat(current);
+  if(isNaN(a)||isNaN(b)) return;
+  let r;
+  switch(operator){
+    case "+": r=a+b; break;
+    case "-": r=a-b; break;
+    case "*": r=a*b; break;
+    case "/": r=b===0?"Error":a/b; break;
+  }
+  add(`${previous} ${operator} ${current} = ${r}`);
+  current=r.toString(); previous=""; operator=null;
+  update(current);
+}
+
+/* Scientific */
+function sqrt(){ if(current){ let r=Math.sqrt(current); add(`√${current}=${r}`); current=r; update(r);} }
+function square(){ if(current){ let r=current*current; add(`${current}²=${r}`); current=r; update(r);} }
+function pow(){ previous=current; operator="^"; current=""; }
+
+function reciprocal(){ if(current){ let r=1/current; add(`1/${current}=${r}`); current=r; update(r);} }
+function percent(){ if(current){ current=current/100; update(current);} }
+
+function sin(){ calcFunc(Math.sin,"sin"); }
+function cos(){ calcFunc(Math.cos,"cos"); }
+function tan(){ calcFunc(Math.tan,"tan"); }
+function log(){ calcFunc(x=>Math.log10(x),"log"); }
+function ln(){ calcFunc(Math.log,"ln"); }
+
+function calcFunc(fn,name){
+  if(current){
+    let r=fn(parseFloat(current));
+    add(`${name}(${current})=${r}`);
+    current=r; update(r);
+  }
+}
+
+function pi(){ current=Math.PI.toString(); update(current); }
+function eNum(){ current=Math.E.toString(); update(current); }
+
+/* controls */
+function clearAll(){ current=""; previous=""; operator=null; update("0"); }
+function del(){ current=current.slice(0,-1); update(current); }
+
+function add(t){
+  let div=document.createElement("div");
+  div.innerText=t;
+  history.prepend(div);
+}
+
+/* keyboard */
+document.addEventListener("keydown",e=>{
+  if(!isNaN(e.key)) num(e.key);
+  if(e.key===".") dot();
+  if(["+","-","*","/"].includes(e.key)) op(e.key);
+  if(e.key==="Enter") calculate();
+  if(e.key==="Backspace") del();
+  if(e.key==="Escape") clearAll();
+});
+</script>
+
+</body>
+</html>

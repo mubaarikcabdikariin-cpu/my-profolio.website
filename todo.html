@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App Professional - Mubarik</title>
+    <style>
+        :root {
+            --primary: #f39c12;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --danger: #ef4444;
+            --success: #22c55e;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 40px 10px;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        h2 { text-align: center; margin-bottom: 20px; font-size: 26px; }
+
+        /* Qaybta Input-ka */
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input#taskInput {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            border: 2px solid #334155;
+            background: #0f172a;
+            color: white;
+            outline: none;
+        }
+
+        button#add-btn {
+            background: var(--primary);
+            border: none;
+            padding: 0 20px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Qaybta Filter-ka iyo Tirinta */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .filters button {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .filters button.active { color: var(--primary); font-weight: bold; }
+
+        /* Liiska Hawlaha */
+        ul { list-style: none; padding: 0; }
+
+        li {
+            background: #334155;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        li.completed { opacity: 0.5; border-left: 5px solid var(--success); }
+        li.completed span.text { text-decoration: line-through; }
+
+        .task-info { flex: 1; cursor: pointer; }
+        .time { font-size: 10px; color: #94a3b8; display: block; }
+
+        .actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .delete-btn { color: var(--danger); }
+
+        /* Badhanka Clear All */
+        .clear-all {
+            width: 100%;
+            padding: 10px;
+            background: none;
+            border: 1px solid #475569;
+            color: #94a3b8;
+            border-radius: 10px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .clear-all:hover { background: var(--danger); color: white; border-color: var(--danger); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Hawlahayga 📝</h2>
+    
+    <div class="input-group">
+        <input type="text" id="taskInput" placeholder="Maxaa kuu qorsheysan?">
+        <button id="add-btn" onclick="addTask()">Ku Dar</button>
+    </div>
+
+    <div class="controls">
+        <span id="counter">0 hawlood dhiman</span>
+        <div class="filters">
+            <button class="active" onclick="filterTasks('all', this)">Dhamaan</button>
+            <button onclick="filterTasks('pending', this)">Dhiman</button>
+            <button onclick="filterTasks('completed', this)">Dhammaystiran</button>
+        </div>
+    </div>
+
+    <ul id="taskList"></ul>
+
+    <button class="clear-all" onclick="clearAll()">Tirtir Dhamaan</button>
+</div>
+
+<script>
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const taskInput = document.getElementById('taskInput');
+    const taskList = document.getElementById('taskList');
+
+    function renderTasks(filter = 'all') {
+        taskList.innerHTML = '';
+        let filteredTasks = tasks;
+
+        if (filter === 'pending') filteredTasks = tasks.filter(t => !t.completed);
+        if (filter === 'completed') filteredTasks = tasks.filter(t => t.completed);
+
+        filteredTasks.forEach((task, index) => {
+            const li = document.createElement('li');
+            if (task.completed) li.classList.add('completed');
+
+            li.innerHTML = `
+                <div class="task-info" onclick="toggleTask(${index})">
+                    <span class="text">${task.text}</span>
+                    <span class="time">⏰ ${task.time}</span>
+                </div>
+                <div class="actions">
+                    <button class="delete-btn" onclick="deleteTask(${index})">🗑️</button>
+                </div>
+            `;
+            taskList.appendChild(li);
+        });
+        updateCounter();
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    function addTask() {
+        if (taskInput.value.trim() === "") return;
+        const newTask = {
+            text: taskInput.value,
+            time: new Date().toLocaleString('so-SO', { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short' }),
+            completed: false
+        };
+        tasks.push(newTask);
+        taskInput.value = "";
+        renderTasks();
+    }
+
+    function toggleTask(index) {
+        tasks[index].completed = !tasks[index].completed;
+        renderTasks();
+    }
+
+    function deleteTask(index) {
+        tasks.splice(index, 1);
+        renderTasks();
+    }
+
+    function clearAll() {
+        if (confirm("Ma hubtaa inaad tirtirto dhammaan hawlaha?")) {
+            tasks = [];
+            renderTasks();
+        }
+    }
+
+    function updateCounter() {
+        const count = tasks.filter(t => !t.completed).length;
+        document.getElementById('counter').innerText = `${count} hawlood dhiman`;
+    }
+
+    function filterTasks(type, btn) {
+        document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderTasks(type);
+    }
+
+    taskInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addTask(); });
+
+    // Marka hore soo saar xogta
+    renderTasks();
+</script>
+
+</body>
+</html>

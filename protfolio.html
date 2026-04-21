@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mubarik Cartan | Multimedia & Web Dev</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* --- CSS STYLE --- */
+        :root {
+            --gold: #FFD700;
+            --dark: #0B0B0B;
+            --card-bg: #1A1A1A;
+            --text: #FFFFFF;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body { background-color: var(--dark); color: var(--text); overflow-x: hidden; }
+
+        /* Navigation */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 8%; background: rgba(0,0,0,0.9);
+            position: fixed; width: 100%; z-index: 1000;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        .logo { font-size: 24px; font-weight: 800; }
+        .logo span { color: var(--gold); }
+        .nav-links { display: flex; list-style: none; }
+        .nav-links li { margin-left: 25px; }
+        .nav-links a { text-decoration: none; color: white; font-size: 14px; transition: 0.3s; }
+        .nav-links a:hover { color: var(--gold); }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 8%; background: radial-gradient(circle at center, #1a1a1a 0%, #0b0b0b 100%);
+        }
+        .hero-content h1 { font-size: 3.5rem; margin: 10px 0; line-height: 1.2; }
+        .hero-content span { color: var(--gold); }
+        .hero-content p { color: #ccc; max-width: 500px; margin-bottom: 30px; }
+
+        /* Profile Image & Shape */
+        .hero-image { position: relative; width: 350px; height: 350px; }
+        .shape-bg {
+            position: absolute; width: 100%; height: 100%;
+            background: var(--gold); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            z-index: 1; animation: morph 8s infinite ease-in-out;
+            opacity: 0.8;
+        }
+        .hero-image img {
+            position: relative; width: 100%; height: 100%; object-fit: cover;
+            border-radius: 20px; z-index: 2; border: 3px solid var(--gold);
+        }
+
+        @keyframes morph {
+            0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 30px; text-decoration: none; font-weight: 600;
+            border-radius: 5px; transition: 0.4s; display: inline-block;
+        }
+        .btn-gold { background: var(--gold); color: black; }
+        .btn-outline { border: 1px solid var(--gold); color: var(--gold); margin-left: 10px; }
+        .btn:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(255,215,0,0.3); }
+
+        /* Skills Section */
+        section { padding: 80px 8%; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; }
+        .section-title span { color: var(--gold); }
+
+        .skills-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
+        }
+        .skill-card {
+            background: var(--card-bg); padding: 25px; border-radius: 15px;
+            border-left: 5px solid var(--gold); transition: 0.3s;
+        }
+        .skill-card:hover { transform: scale(1.03); }
+        .skill-card h3 { margin-bottom: 15px; font-size: 18px; }
+
+        .progress-bar { background: #333; height: 8px; border-radius: 10px; position: relative; }
+        .progress { background: var(--gold); height: 100%; border-radius: 10px; }
+        .percent { position: absolute; right: 0; top: -25px; color: var(--gold); font-size: 12px; }
+
+        /* Resources / Gallery */
+        .resource-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;
+        }
+        .res-box {
+            height: 200px; background: #222; border: 2px dashed #444;
+            display: flex; align-items: center; justify-content: center; border-radius: 10px;
+            transition: 0.3s;
+        }
+        .res-box:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* Feedback */
+        .feedback-flex { display: flex; gap: 20px; flex-wrap: wrap; }
+        .f-card { background: #111; padding: 20px; border-radius: 10px; flex: 1; min-width: 300px; }
+        .f-card i { color: var(--gold); margin-bottom: 10px; }
+
+        footer { text-align: center; padding: 40px; border-top: 1px solid #222; }
+
+        @media (max-width: 768px) {
+            .hero { flex-direction: column-reverse; text-align: center; padding-top: 120px; }
+            .hero-image { width: 250px; height: 250px; margin-bottom: 40px; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">M.<span>CARTAN</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#resources">Resources</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav
+
+    <section id="home" class="hero">
+        <div class="hero-content" data-aos="fade-right">
+            <h3>Web Developer & Multimedia Specialist</h3>
+            <h1>Mubarik Abdikarim <br><span>Omer {Cartan}</span></h1>
+            <p>Waxaan ahay khabiir ku takhasusay naqshadaynta casriga ah iyo horumarinta digital-ka. Waxaan abuuraa muuqaallo iyo website-yo tayo sare leh.</p>
+            <div class="hero-btns">
+                <a href="#contact" class="btn btn-gold">ila soo xiriir</a>
+                <a href="#resources" class="btn btn-outline">Shaqooyinkeyga</a>
+            </div>
+        </div>
+        <div class="hero-image" data-aos="zoom-in">
+            <div class="shape-bg"></div>
+            <img src="./4378a8be-0128-40cf-bfde-aea7d26e77f1.jpeg" alt="Mubarik Cartan">
+        </div>
+    </section>
+
+    <section id="about" data-aos="fade-up">
+        <h2 class="section-title">About <span>Me</span></h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto; color: #bbb;">
+            Waxaan ahay Mubarik Cartan, qof u heellan hal-abuurka dhijitaalka ah. Waxaan khibrad ballaaran u leeyahay isticmaalka agabka Adobe iyo dhisidda website-yo isticmaala tignoolajiyada ugu dambeysa. Hadafkeygu waa inaan fikrad kasta u bedelo wax dhab ah oo qurux badan.
+        </p>
+    </section>
+
+    <section id="skills" style="background: #050505;">
+        <h2 class="section-title">My <span>Skills</span></h2>
+        <div class="skills-grid">
+            <div class="skill-card" data-aos="flip-up">
+                <h3>After Effects</h3>
+                <div class="progress-bar"><div class="progress" style="width: 95%;"><span class="percent">95%</span></div></div>
+            </div>
+            <div class="skill-card" data-aos="flip-up" data-aos-delay="100">
+                <h3>Premiere Pro</h3>
+                <div class="progress-bar"><div class="progress" style="width: 90%;"><span class="percent">90%</span></div></div>
+            </div>
+            <div class="skill-card" data-aos="flip-up" data-aos-delay="200">
+                <h3>Photoshop</h3>
+                <div class="progress-bar"><div class="progress" style="width: 90%;"><span class="percent">90%</span></div></div>
+            </div>
+            <div class="skill-card" data-aos="flip-up" data-aos-delay="300">
+                <h3>Illustrator</h3>
+                <div class="progress-bar"><div class="progress" style="width: 90%;"><span class="percent">90%</span></div></div>
+            </div>
+            <div class="skill-card" data-aos="flip-up" data-aos-delay="400">
+                <h3>InDesign</h3>
+                <div class="progress-bar"><div class="progress" style="width: 90%;"><span class="percent">90%</span></div></div>
+            </div>
+            <div class="skill-card" data-aos="flip-up" data-aos-delay="500">
+                <h3>Web Development</h3>
+                <div class="progress-bar"><div class="progress" style="width: 85%;"><span class="percent">85%</span></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="resources">
+        <h2 class="section-title">My <span>Resources</span></h2>
+        <div class="resource-grid">
+            <div class="res-box" data-aos="zoom-in"><span>Image Gallery</span></div>
+            <div class="res-box" data-aos="zoom-in" data-aos-delay="100"><span>Video Portfolio</span></div>
+            <div class="res-box" data-aos="zoom-in" data-aos-delay="200"><span>Web Designs</span></div>
+        </div>
+    </section>
+
+    <section id="feedback">
+        <h2 class="section-title">Client <span>Feedback</span></h2>
+        <div class="feedback-flex">
+            <div class="f-card" data-aos="fade-right">
+                <i class="fas fa-quote-left fa-2x"></i>
+                <p>Mubarik waa qof xirfad sare u leh dhinaca Edit-ka iyo Multimedia-ga. Shaqadiisu waa mid heersare ah.</p>
+                <h4 style="margin-top:15px; color:var(--gold)">- Cabdi Raxmaan</h4>
+            </div>
+            <div class="f-card" data-aos="fade-left">
+                <i class="fas fa-quote-left fa-2x"></i>
+                <p>Website-ka uu noo dhisay wuxuu ahaa mid aad u dhakhso badan oo casri ah. Aad ayaan ugu qanacsanahay.</p>
+                <h4 style="margin-top:15px; color:var(--gold)">- Shirkadda ICT</h4>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="text-align: center;">
+        <h2 class="section-title">Get In <span>Touch</span></h2>
+        <p>Email: mubarakcabdikariin@gmail.com</p>
+        <p>Phone: +252 656942593</p>
+        <div style="margin-top: 20px;">
+            <a href="#" style="color:white; margin: 0 10px; font-size: 24px;"><i class="fab fa-facebook"></i></a>
+            <a href="#" style="color:white; margin: 0 10px; font-size: 24px;"><i class="fab fa-instagram"></i></a>
+            <a href="#" style="color:white; margin: 0 10px; font-size: 24px;"><i class="fab fa-tiktok"></i></a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 <span>Mubarik Cartan</span> | All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Init Animation
+        AOS.init({ duration: 1000, once: true });
+
+        // Header scroll effect
+        window.onscroll = function() {
+            let nav = document.querySelector('nav');
+            if (window.pageYOffset > 50) {
+                nav.style.padding = "10px 8%";
+                nav.style.background = "#000";
+            } else {
+                nav.style.padding = "20px 8%";
+                nav.style.background = "rgba(0,0,0,0.9)";
+            }
+        };
+    </script>
+</body>
+</html>

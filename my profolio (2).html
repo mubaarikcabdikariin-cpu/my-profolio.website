@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Mubarik Cartan | Multimedia & Web Developer</title>
+    <meta name="description" content="Mubarik Abdikarim Omer (Cartan) - Multimedia Specialist & Web Developer khabiir ku ah After Effects, Premiere Pro, iyo dhisidda mareegaha casriga ah.">
+    <meta name="keywords" content="Mubarik Cartan, Video Editor, Web Developer, After Effects expert, Somalia web design">
+
+    <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/m.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #161616;
+            --text-color: #ffffff;
+            --accent-color: #ffcc00;
+            --gray-text: #b0b0b0;
+            --nav-bg: rgba(10, 10, 10, 0.95);
+            --border-color: #333;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f4f4f4;
+            --card-bg: #ffffff;
+            --text-color: #1a1a1a;
+            --accent-color: #e6b800;
+            --gray-text: #555555;
+            --nav-bg: rgba(244, 244, 244, 0.95);
+            --border-color: #ddd;
+        }
+
+        * {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background 0.3s ease, color 0.3s ease;
+            scroll-behavior: smooth;
+        }
+
+        body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; }
+
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 8%; background: var(--nav-bg);
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .logo { font-size: 1.6rem; font-weight: 700; color: var(--accent-color); letter-spacing: 1px; }
+        .nav-links { display: flex; list-style: none; }
+        .nav-links li { margin-left: 25px; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: var(--accent-color); }
+
+        #theme-toggle { background: none; border: none; cursor: pointer; color: var(--accent-color); font-size: 1.4rem; margin-left: 20px; }
+
+        .hero {
+            height: 100vh; display: flex; align-items: center;
+            justify-content: space-between; padding: 0 10%; margin-top: 50px;
+        }
+        .hero-text h1 { font-size: 3.5rem; line-height: 1.2; margin-bottom: 20px; }
+        .hero-text span { color: var(--accent-color); }
+        .hero-text p { color: var(--gray-text); margin-bottom: 30px; max-width: 550px; }
+
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; }
+        .btn {
+            padding: 12px 28px; border-radius: 5px; text-decoration: none;
+            font-weight: 700; transition: 0.3s; display: inline-flex;
+            align-items: center; gap: 10px; cursor: pointer; border: none;
+        }
+        .btn-main { background: var(--accent-color); color: #000; }
+        .btn-outline { border: 2px solid var(--accent-color); color: var(--accent-color); background: transparent; }
+        .btn:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(230, 184, 0, 0.2); }
+
+        .shape-box {
+            width: 380px; height: 380px; background: var(--accent-color);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: morph 6s infinite alternate; overflow: hidden;
+            border: 5px solid var(--bg-color);
+        }
+        @keyframes morph {
+            0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            100% { border-radius: 50% 50% 20% 80% / 20% 80% 50% 50%; }
+        }
+        .shape-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .section { padding: 80px 10%; }
+        .title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; }
+        .title span { color: var(--accent-color); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .card { background: var(--card-bg); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid var(--border-color); }
+
+        /* Progress Bars */
+        .skill-info { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 600; }
+        .progress-bar { width: 100%; height: 10px; background: #333; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--accent-color); }
+
+        /* Resource/Gallery */
+        .res-img { height: 180px; width: 100%; overflow: hidden; border-radius: 15px; margin-bottom: 15px; }
+        .res-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover .res-img img { transform: scale(1.1); }
+
+        footer { text-align: center; padding: 50px; border-top: 1px solid var(--border-color); color: var(--gray-text); }
+
+        @media (max-width: 768px) {
+            .hero { flex-direction: column-reverse; text-align: center; height: auto; padding-top: 120px; }
+            .hero-text h1 { font-size: 2.3rem; }
+            .shape-box { width: 280px; height: 280px; margin: 0 auto 40px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">M.CARTAN<span>.</span></div>
+        <div class="nav-right" style="display:flex; align-items:center;">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#resources">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button id="theme-toggle"><i class="fas fa-moon" id="theme-icon"></i></button>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-text" data-aos="fade-right">
+            <h1>Mubarik Abdikarim <br><span>Omer (Cartan)</span></h1>
+            <p>Multimedia Specialist & Web Developer khabiir ku ah After Effects, Photoshop, iyo dhisidda Mareegaha casriga ah.</p>
+            <div class="btn-group">
+                <a href="https://wa.me/252636942593" class="btn btn-main"><i class="fab fa-whatsapp"></i> Hire Me</a>
+                <a href="my-cv.pdf" download class="btn btn-outline"><i class="fas fa-download"></i> Download CV</a>
+            </div>
+        </div>
+        <div class="shape-box" data-aos="zoom-in">
+            <img src="./4378a8be-0128-40cf-bfde-aea7d26e77f1.jpeg" alt="Mubarik Profile">
+        </div>
+    </section>
+
+    <section class="section" id="skills">
+        <h2 class="title" data-aos="fade-up">Xirfadaha <span>Farsamo</span></h2>
+        <div class="grid">
+            <div class="card" data-aos="fade-up">
+                <div class="skill-info"><span>Photoshop</span><span>95%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 95%;"></div></div>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="100">
+                <div class="skill-info"><span>After Effects</span><span>95%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 95%;"></div></div>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="200">
+                <div class="skill-info"><span>Illustrator</span><span>90%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 90%;"></div></div>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="300">
+                <div class="skill-info"><span>Web Development</span><span>85%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="resources" style="background: var(--card-bg);">
+        <h2 class="title" data-aos="fade-up">My <span>Resources & Work</span></h2>
+        <div class="grid">
+            <div class="card" data-aos="zoom-in">
+                <div class="res-img"><img src="project1.jpg" alt="Video Project"></div>
+                <h3>Motion Design</h3>
+                <p>After Effects Projects</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="100">
+                <div class="res-img"><img src="project2.jpg" alt="Web Project"></div>
+                <h3>Websites</h3>
+                <p>Modern Web Designs</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="200">
+                <div class="res-img"><img src="project3.jpg" alt="Design Project"></div>
+                <h3>Graphics</h3>
+                <p>Photoshop & Illustrator</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="testimonials">
+        <h2 class="title" data-aos="fade-up">Macaamiisha <span>i Ammanay</span></h2>
+        <div class="grid">
+            <div class="card" data-aos="fade-right">
+                <i class="fas fa-quote-left" style="color:var(--accent-color);"></i>
+                <p>"Mubarik waa qof aad u hal-abuur badan."</p>
+                <strong>- Axmed Cali</strong>
+            </div>
+            <div class="card" data-aos="fade-right" data-aos-delay="100">
+                <i class="fas fa-quote-left" style="color:var(--accent-color);"></i>
+                <p>"Shaqo hufan iyo wakhti dhow."</p>
+                <strong>- Sahra Jaamac</strong>
+            </div>
+            <div class="card" data-aos="fade-right" data-aos-delay="200">
+                <i class="fas fa-quote-left" style="color:var(--accent-color);"></i>
+                <p>"Video-yada uu sameeyo waa kuwo heer caalami ah."</p>
+                <strong>- Maxamed Cabdi</strong>
+            </div>
+            <div class="card" data-aos="fade-right" data-aos-delay="300">
+                <i class="fas fa-quote-left" style="color:var(--accent-color);"></i>
+                <p>"Website-kayga isagaa dhisay, aad baan ugu qanacsanahay."</p>
+                <strong>- Hodan Ismaaciil</strong>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact" style="background: var(--card-bg);">
+        <h2 class="title" data-aos="fade-up">ii soo dir <span>Fariin</span></h2>
+        <div style="max-width: 600px; margin: 0 auto;">
+            <form action="https://formspree.io/f/mubaarikcabdikariin@gmail.com" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="text" name="name" placeholder="Magacaaga" required style="padding:15px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-color); color:var(--text-color);">
+                <input type="email" name="email" placeholder="Email-kaaga" required style="padding:15px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-color); color:var(--text-color);">
+                <textarea name="message" placeholder="Sideen kuu caawin karaa?" required style="padding:15px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-color); color:var(--text-color); height:120px;"></textarea>
+                <button type="submit" class="btn btn-main" style="width: 100%;">Soo dir Fariinta</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Mubarik Cartan. All rights reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: false });
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') !== 'light') {
+                body.setAttribute('data-theme', 'light');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                body.removeAttribute('data-theme');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+        });
+    </script>
+</body>
+</html>
